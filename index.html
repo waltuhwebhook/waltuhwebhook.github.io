@@ -1,0 +1,110 @@
+<html>
+  <head>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #36393f;
+  color: #fff;
+}
+
+h1 {
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+}
+
+form {
+  margin: 0 auto;
+  max-width: 600px;
+  background-color: #40444b;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  resize: vertical;
+  min-height: 100px;
+  background-color: #36393f;
+  color: #fff;
+}
+
+button[type="submit"] {
+  background-color: #7289da;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #5a68a5;
+}
+</style>
+    <title>Discord Webhook Test</title>
+  </head>
+  <body>
+    <h1>Discord Webhook Test</h1>
+    <form action="https://discord.com/api/webhooks/1079434996630159410/KAonDdzHFv9NqwUVZKxakBQNtzxx-ybvjzNJbGMyi9xS1eINOF0ugQStAZQwuNS7xC5F" method="post">
+      <label for="message">Message:</label>
+      <textarea id="message" name="content" required></textarea><br><br>
+      <input type="hidden" name="username" value="waltuh">
+      <button type="submit" id="send-button">Send Message</button>
+    </form>
+    <script>
+      var usernameInput = document.querySelector("input[name='username']");
+      usernameInput.value = getDiscordUsername();
+      
+      var messageCount = 0;
+      var messageTimes = [];
+      var messageLimit = 10;
+      var timeLimit = 60000; // 1 hour in milliseconds
+      
+      var sendButton = document.getElementById("send-button");
+      sendButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (canSendMessage()) {
+          sendMessage();
+        } else {
+          alert("You have reached the message limit for 10 minutes.");
+        }
+      });
+      
+      function getDiscordUsername() {
+        var user = new URLSearchParams(window.location.search).get("user");
+        return user ? user : "waltuh";
+      }
+      
+      function canSendMessage() {
+        var currentTime = new Date().getTime();
+if (message.length > 2000) {
+      alert("Message is too long. Please enter a message that is 2000 characters or less.");
+      return;
+    }
+        messageTimes.push(currentTime);
+        while (messageTimes.length > messageLimit) {
+          messageTimes.shift();
+        }
+        messageCount = messageTimes.length;
+        return (currentTime - messageTimes[0] <= timeLimit);
+      }
+      
+      function sendMessage() {
+        var form = document.querySelector("form");
+        form.submit();
+      }
+    </script>
+  </body>
+</html>
