@@ -1,5 +1,8 @@
 <html>
   <head>
+    <script>
+const discordWebhookUrl = '{{ secrets.WEBHOOK }}';
+</script>
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -106,5 +109,6 @@ if (message.length > 2000) {
         form.submit();
       }
     </script>
+    
   </body>
 </html>
