@@ -1,15 +1,23 @@
 <?php
-$discord_webhook_secret = $_ENV['WEBHOOK'];
-$discord_webhook_url = 'https://discord.com/api/webhooks/' . $discord_webhook_secret;
-$message = array('content' => $_POST['message']);
+$discordWebhookUrl = $_POST['WEBHOOK']; // retrieve the value of the hidden input field
+$message = $_POST['message']; // retrieve the message from the form
+$data = array('content' => $message);
+
 $options = array(
-  'http' => array(
-    'method' => 'POST',
-    'header' => 'Content-Type: application/json',
-    'content' => json_encode($message)
-  )
+    'http' => array(
+        'method'  => 'POST',
+        'content' => json_encode($data),
+        'header' =>  "Content-Type: application/json\r\n" .
+                    "Accept: application/json\r\n"
+    )
 );
-$context = stream_context_create($options);
-$result = file_get_contents($discord_webhook_url, false, $context);
-echo $result;
+
+$context  = stream_context_create($options);
+$result = file_get_contents($discordWebhookUrl, false, $context);
+
+if ($result === false) {
+    // handle error
+} else {
+    // handle success
+}
 ?>
